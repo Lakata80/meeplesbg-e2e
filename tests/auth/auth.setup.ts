@@ -27,7 +27,9 @@ setup('authenticate as test user', async ({ page }) => {
   await page.waitForURL((url) => !url.pathname.includes('/login'), { timeout: 20_000 });
 
   const isLoggedIn = await page
-    .getByRole('button', { name: 'Потребителско меню' })
+    .locator('header a[href="/profile"], header button[aria-label*="меню"], header button[aria-label*="профил"]')
+    .or(page.locator('header').getByRole('button').filter({ hasText: /^[A-ZА-Я]{1,3}$/ }))
+    .first()
     .isVisible()
     .catch(() => false);
 

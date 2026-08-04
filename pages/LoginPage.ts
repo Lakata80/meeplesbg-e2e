@@ -12,7 +12,7 @@ export class LoginPage extends BasePage {
   constructor(page: Page) {
     super(page);
     this.emailInput = page.getByLabel('Имейл');
-    this.passwordInput = page.getByLabel('Парола');
+    this.passwordInput = page.locator('#login-парола');
     this.submitBtn = page.getByRole('button', { name: 'Влез' });
     this.errorMessage = page.locator('.rounded-xl.bg-red-50');
     this.loginTab = page.getByRole('button', { name: 'Вход' });

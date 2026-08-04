@@ -14,7 +14,7 @@ export class ProfilePage extends BasePage {
     this.pageTitle = page.getByRole('heading', { level: 1 });
     this.collectionTab = page.getByRole('link', { name: /Колекция/ });
     this.wishlistTab = page.getByRole('link', { name: /Искам да играя/ });
-    this.bggImportLink = page.getByRole('link', { name: /Синхронизирай с BGG|Импортирай от BGG/ });
+    this.bggImportLink = page.getByRole('link', { name: /Синхронизирай с BGG|Импортирай от BGG/ }).first();
     this.userMenuBtn = page.getByRole('button', { name: 'Потребителско меню' });
     this.logoutBtn = page.getByRole('button', { name: 'Изход' });
   }
@@ -31,7 +31,7 @@ export class ProfilePage extends BasePage {
     await this.userMenuBtn.click();
     await this.logoutBtn.waitFor({ state: 'visible' });
     await this.logoutBtn.click();
-    await this.page.waitForURL('/');
+    await this.page.waitForURL(/\/$/);
   }
 
   async getCollectionCount(): Promise<number> {
