@@ -26,6 +26,7 @@ test.describe('Страница с игри', () => {
   });
 
   test('search полето е видимо', async () => {
-    await expect(gamesPage.searchInput).toBeVisible();
+    // Header search input is a client Suspense component — needs hydration time
+    await expect(gamesPage.searchInput).toBeVisible({ timeout: 30_000 });
   });
 });

@@ -24,10 +24,14 @@ export class BasePage {
   }
 
   async acceptCookiesIfVisible(): Promise<void> {
-    const visible = await this.cookieBanner.isVisible().catch(() => false);
-    if (visible) {
-      await this.acceptCookiesBtn.click();
-      await this.cookieBanner.waitFor({ state: 'hidden' });
+    try {
+      // Cookie banner is client-side — wait up to 5s for it to appear after hydration
+      await this.cookieBanner.waitFor({ state: 'visible', timeout: 5_000 });
+      // force:true bypasses pointer-event interception from overlays during loading
+      await this.acceptCookiesBtn.click({ force: true });
+      await this.cookieBanner.waitFor({ state: 'hidden', timeout: 10_000 });
+    } catch {
+      // Banner did not appear — nothing to dismiss
     }
   }
 

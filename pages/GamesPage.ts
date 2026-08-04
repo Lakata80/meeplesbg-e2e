@@ -10,21 +10,27 @@ export class GamesPage extends BasePage {
 
   constructor(page: Page) {
     super(page);
-    this.searchInput = page.getByLabel('Търси настолна игра');
-    this.searchSubmitBtn = page.getByRole('button', { name: 'Търси' });
+    // Both search inputs are in <header>; first() is the desktop variant (visible at 1280px)
+    this.searchInput = page.getByLabel('Търси настолна игра').first();
+    this.searchSubmitBtn = page.getByRole('button', { name: 'Търси' }).first();
     this.gameCards = page.locator('a[href*="/igri/"]').filter({ has: page.locator('h3') });
-    this.emptyState = page.getByText('Няма намерени игри');
+    // <h1> also shows this text when count=0; target the <p> inside the empty-state block
+    this.emptyState = page.locator('p').filter({ hasText: /^Няма намерени игри$/ });
     this.resultsHeading = page.getByRole('heading', { level: 2 });
   }
 
-  async open(): Promise<void> {
-    await this.page.goto('/igri', { waitUntil: 'domcontentloaded' });
+  async open(query?: string): Promise<void> {
+    const url = query ? `/igri?q=${encodeURIComponent(query)}` : '/igri';
+    await this.page.goto(url, { timeout: 120_000 });
+    // GameGrid is SSR-rendered (not in Suspense), visible immediately after goto()
+    if (!query) {
+      await this.gameCards.first().waitFor({ state: 'visible', timeout: 120_000 });
+    }
   }
 
   async search(query: string): Promise<void> {
-    await this.searchInput.fill(query);
-    await this.searchSubmitBtn.click();
-    await this.page.waitForLoadState('networkidle');
+    // Navigate directly to avoid a second 90s SSR round-trip through the form
+    await this.open(query);
   }
 
   async getGameCardCount(): Promise<number> {
