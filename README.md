@@ -1,5 +1,7 @@
 # MeeplesBG E2E Testing Framework
 
+![E2E Tests](https://github.com/Lakata80/meeplesbg-e2e/actions/workflows/e2e.yml/badge.svg)
+
 End-to-end test suite for [meeplesbg.com](https://meeplesbg.com) built with **Playwright** and **TypeScript**, following the **Page Object Model** pattern.
 
 ## Tech Stack
