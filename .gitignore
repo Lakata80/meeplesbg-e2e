@@ -1,0 +1,17 @@
+node_modules/
+dist/
+
+# Test artifacts
+test-results/
+playwright-report/
+blob-report/
+
+# Auth state (contains session cookies — never commit)
+.auth/
+
+# Environment (contains credentials)
+.env
+
+# OS
+.DS_Store
+Thumbs.db

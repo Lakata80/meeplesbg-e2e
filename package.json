@@ -1,0 +1,31 @@
+{
+  "name": "meeplesbg-e2e",
+  "version": "1.0.0",
+  "description": "Playwright E2E testing framework for meeplesbg.com — Page Object Model pattern",
+  "scripts": {
+    "test": "playwright test",
+    "test:prod": "cross-env BASE_URL=https://meeplesbg.com playwright test",
+    "test:local": "cross-env BASE_URL=http://localhost:3000 playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report"
+  },
+  "keywords": [
+    "playwright",
+    "typescript",
+    "e2e",
+    "testing",
+    "page-object-model"
+  ],
+  "author": "Lakata80",
+  "license": "MIT",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.1.2",
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.4.2",
+    "typescript": "^7.0.2"
+  }
+}
