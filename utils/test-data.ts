@@ -10,8 +10,9 @@ export const ROUTES = {
 } as const;
 
 export const TEST_GAMES = {
-  popular:     'Catan',
-  nonexistent: 'xyzxyz987abc_notreal',
+  popular:              'Catan',
+  nonexistent:          'xyzxyz987abc_notreal',
+  withExpansionsSlug:   'catan',
 } as const;
 
 export const NAV_LINKS = {
