@@ -18,7 +18,8 @@ export const TEST_GAMES = {
 export const NAV_LINKS = {
   games:     'Игри',
   top:       'Топ 100',
-  news:      'Новини',
+  top9:      '🏆 Top 9',
+  news:      'Свят на игрите',
   community: 'Общност',
 } as const;
 
