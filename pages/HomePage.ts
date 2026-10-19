@@ -12,7 +12,7 @@ export class HomePage extends BasePage {
     this.heroSection = page.locator('section').first();
     this.heroTitle = page.getByRole('heading', { level: 1 });
     this.heroSearchBar = page.getByPlaceholder('Търси игра по заглавие...');
-    this.quizCta = page.getByRole('link', { name: /Направи куиза/ });
+    this.quizCta = page.getByRole('link', { name: /Квиз/ }).first();
   }
 
   async open(): Promise<void> {

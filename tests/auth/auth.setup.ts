@@ -26,14 +26,12 @@ setup('authenticate as test user', async ({ page }) => {
 
   await page.waitForURL((url) => !url.pathname.includes('/login'), { timeout: 20_000 });
 
-  const isLoggedIn = await page
-    .locator('header a[href="/profile"], header button[aria-label*="меню"], header button[aria-label*="профил"]')
-    .or(page.locator('header').getByRole('button').filter({ hasText: /^[A-ZА-Я]{1,3}$/ }))
-    .first()
-    .isVisible()
-    .catch(() => false);
-
-  expect(isLoggedIn, 'Login failed — check test credentials').toBe(true);
+  await expect(
+    page.locator('header a[href="/profile"], header button[aria-label*="меню"], header button[aria-label*="профил"]')
+      .or(page.locator('header').getByRole('button').filter({ hasText: /^[A-ZА-Я]{1,3}$/ }))
+      .first(),
+    'Login failed — check test credentials'
+  ).toBeVisible({ timeout: 15_000 });
 
   await page.context().storageState({ path: authFile });
 });

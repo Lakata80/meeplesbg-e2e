@@ -24,7 +24,9 @@ export class LoginPage extends BasePage {
   }
 
   async login(email: string, password: string): Promise<void> {
+    await this.loginTab.waitFor({ state: 'visible' });
     await this.loginTab.click();
+    await this.emailInput.waitFor({ state: 'visible' });
     await this.emailInput.fill(email);
     await this.passwordInput.fill(password);
     await this.submitBtn.click();

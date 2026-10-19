@@ -25,6 +25,7 @@ export class GameDetailPage extends BasePage {
 
   async clickFirstExpansion(): Promise<void> {
     // Разширения section appears before Подобни игри in DOM, so first card is an expansion
+    await this.gameCardLinks.first().waitFor({ state: 'visible' });
     await this.gameCardLinks.first().click();
     await this.page.waitForURL(/\/igri\/.+/);
   }

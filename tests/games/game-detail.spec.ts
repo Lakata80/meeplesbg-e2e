@@ -26,6 +26,7 @@ test.describe('Страница на игра', () => {
   });
 
   test('разширенията имат линкове към собствените им страници', async () => {
+    await expect(gameDetailPage.gameCardLinks.first()).toBeVisible();
     const count = await gameDetailPage.gameCardLinks.count();
     expect(count).toBeGreaterThan(0);
   });
