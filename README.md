@@ -127,6 +127,34 @@ test('searching for "Catan" returns results', async ({ page }) => {
 
 > **Never commit `.env`** — it is gitignored. Use `.env.example` as the template.
 
+## CI/CD
+
+The repository includes a single GitHub Actions workflow: [`.github/workflows/e2e.yml`](.github/workflows/e2e.yml).
+
+| Property | Value |
+|----------|-------|
+| Trigger | Push and pull requests to `main` / `master` |
+| Runner | `ubuntu-latest` |
+| Browser | Chromium |
+| Credentials | Injected via GitHub Secrets (`TEST_USER_EMAIL`, `TEST_USER_PASSWORD`) |
+| Artifacts | HTML report + failure screenshots, retained 30 days |
+
+**Why tests run against production:** meeplesbg.com has no staging or development environment — there is only one live instance. All tests use a dedicated test account (`test+playwright@meeplesbg.com`) and execute only read operations (browsing, searching, viewing profile). No orders are placed, no content is created, and no real user data is touched. This is a deliberate trade-off: accepted risk of minor production load vs. the cost of maintaining a full staging clone.
+
+## Design Decisions
+
+**Why Playwright over Cypress?**
+Playwright provides native multi-browser support, true network-layer interception, and first-class TypeScript — essential for a production site that needs reliable cross-browser coverage and can't afford flaky shadow-DOM or iframe workarounds.
+
+**Why TypeScript?**
+Page objects are contracts between the test layer and the UI. TypeScript enforces those contracts at compile time — a renamed method or wrong argument type is a build error, not a silent runtime failure at 2 AM.
+
+**Why Page Object Model?**
+POM decouples locator maintenance from test logic. When the site updates a selector, one file changes (`pages/GamesPage.ts`), not every test that touches that element. `BasePage` captures shared behaviour (cookie banner, navigation) once, inherited everywhere.
+
+**Why the `setup` project pattern?**
+Logging in once per run and reusing `.auth/user.json` cuts auth setup time from O(n tests) to O(1). Playwright's built-in `storageState` makes session reuse safe across parallel workers.
+
 ## Test Coverage
 
 | Area | Tests | Auth Required |
