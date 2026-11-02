@@ -17,7 +17,7 @@ export default defineConfig({
   ],
 
   use: {
-    baseURL: process.env.BASE_URL || 'https://www.meeplesbg.com',
+    baseURL: process.env.BASE_URL || 'https://meeplesbg.com',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',

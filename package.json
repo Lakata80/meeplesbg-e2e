@@ -20,6 +20,9 @@
   ],
   "author": "Lakata80",
   "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.62.1",
