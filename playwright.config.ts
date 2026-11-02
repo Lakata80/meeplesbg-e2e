@@ -11,10 +11,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : 2,
   timeout: 180_000,
   expect: { timeout: 10_000 },
-  reporter: [
-    ['html', { open: 'never' }],
-    ['list'],
-  ],
+  reporter: [['html', { open: 'never' }], ['list']],
 
   use: {
     baseURL: process.env.BASE_URL || 'https://meeplesbg.com',

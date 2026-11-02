@@ -31,8 +31,6 @@ test.describe('Потребителски профил', () => {
   test('logout работи успешно', async ({ page }) => {
     await profilePage.logout();
     await expect(page).toHaveURL(/\/$/);
-    await expect(
-      page.getByRole('link', { name: 'Вход / Регистрация' })
-    ).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Вход / Регистрация' })).toBeVisible();
   });
 });

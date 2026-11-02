@@ -28,9 +28,7 @@ test.describe('Начална страница', () => {
 
   test('навигацията съдържа основните линкове', async () => {
     for (const name of Object.values(NAV_LINKS)) {
-      await expect(
-        homePage.nav.getByRole('link', { name, exact: true })
-      ).toBeVisible();
+      await expect(homePage.nav.getByRole('link', { name, exact: true })).toBeVisible();
     }
   });
 

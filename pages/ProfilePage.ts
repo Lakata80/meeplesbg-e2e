@@ -14,7 +14,9 @@ export class ProfilePage extends BasePage {
     this.pageTitle = page.getByRole('heading', { level: 1 });
     this.collectionTab = page.getByRole('link', { name: /Колекция/ });
     this.wishlistTab = page.getByRole('link', { name: /Искам да играя/ });
-    this.bggImportLink = page.getByRole('link', { name: /Синхронизирай с BGG|Импортирай от BGG/ }).first();
+    this.bggImportLink = page
+      .getByRole('link', { name: /Синхронизирай с BGG|Импортирай от BGG/ })
+      .first();
     this.userMenuBtn = page.getByRole('button', { name: 'Потребителско меню' });
     this.logoutBtn = page.getByRole('button', { name: 'Изход' });
   }

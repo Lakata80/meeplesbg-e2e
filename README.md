@@ -6,11 +6,11 @@ End-to-end test suite for [meeplesbg.com](https://meeplesbg.com) built with **Pl
 
 ## Tech Stack
 
-| Tool | Version | Purpose |
-|------|---------|---------|
-| [Playwright](https://playwright.dev) | ^1.62 | Browser automation & test runner |
-| TypeScript | ^7 | Type-safe test authoring |
-| Node.js | >=22 | Runtime |
+| Tool                                 | Version | Purpose                          |
+| ------------------------------------ | ------- | -------------------------------- |
+| [Playwright](https://playwright.dev) | ^1.62   | Browser automation & test runner |
+| TypeScript                           | ^7      | Type-safe test authoring         |
+| Node.js                              | >=22    | Runtime                          |
 
 ## Project Structure
 
@@ -82,15 +82,16 @@ npm run test:report
 
 The config defines three projects:
 
-| Project | Description |
-|---------|-------------|
-| `setup` | Logs in once and saves session to `.auth/user.json` |
-| `chromium` | Runs all public-page tests (no auth required) |
-| `chromium-auth` | Runs profile tests using the saved session |
+| Project         | Description                                         |
+| --------------- | --------------------------------------------------- |
+| `setup`         | Logs in once and saves session to `.auth/user.json` |
+| `chromium`      | Runs all public-page tests (no auth required)       |
+| `chromium-auth` | Runs profile tests using the saved session          |
 
 ## Page Object Model
 
 Each page class extends `BasePage` and encapsulates:
+
 - **Locators** — typed `Locator` properties for page elements
 - **Actions** — async methods for user interactions (`login()`, `search()`, etc.)
 
@@ -100,7 +101,9 @@ Example:
 // pages/GamesPage.ts
 export class GamesPage extends BasePage {
   readonly searchInput = this.page.getByLabel('Търси настолна игра');
-  readonly gameCards   = this.page.locator('a[href*="/igri/"]').filter({ has: this.page.locator('h3') });
+  readonly gameCards = this.page
+    .locator('a[href*="/igri/"]')
+    .filter({ has: this.page.locator('h3') });
 
   async search(query: string): Promise<void> {
     await this.searchInput.fill(query);
@@ -119,11 +122,11 @@ test('searching for "Catan" returns results', async ({ page }) => {
 
 ## Environment Variables
 
-| Variable | Description |
-|----------|-------------|
-| `BASE_URL` | Base URL to test against (default: `https://meeplesbg.com`) |
-| `TEST_USER_EMAIL` | Email of the dedicated test account |
-| `TEST_USER_PASSWORD` | Password of the dedicated test account |
+| Variable             | Description                                                 |
+| -------------------- | ----------------------------------------------------------- |
+| `BASE_URL`           | Base URL to test against (default: `https://meeplesbg.com`) |
+| `TEST_USER_EMAIL`    | Email of the dedicated test account                         |
+| `TEST_USER_PASSWORD` | Password of the dedicated test account                      |
 
 > **Never commit `.env`** — it is gitignored. Use `.env.example` as the template.
 
@@ -131,13 +134,13 @@ test('searching for "Catan" returns results', async ({ page }) => {
 
 The repository includes a single GitHub Actions workflow: [`.github/workflows/e2e.yml`](.github/workflows/e2e.yml).
 
-| Property | Value |
-|----------|-------|
-| Trigger | Push and pull requests to `main` / `master` |
-| Runner | `ubuntu-latest` |
-| Browser | Chromium |
+| Property    | Value                                                                 |
+| ----------- | --------------------------------------------------------------------- |
+| Trigger     | Push and pull requests to `main` / `master`                           |
+| Runner      | `ubuntu-latest`                                                       |
+| Browser     | Chromium                                                              |
 | Credentials | Injected via GitHub Secrets (`TEST_USER_EMAIL`, `TEST_USER_PASSWORD`) |
-| Artifacts | HTML report + failure screenshots, retained 30 days |
+| Artifacts   | HTML report + failure screenshots, retained 30 days                   |
 
 **Why tests run against production:** meeplesbg.com has no staging or development environment — there is only one live instance. All tests use a dedicated test account (`test+playwright@meeplesbg.com`) and execute only read operations (browsing, searching, viewing profile). No orders are placed, no content is created, and no real user data is touched. This is a deliberate trade-off: accepted risk of minor production load vs. the cost of maintaining a full staging clone.
 
@@ -157,14 +160,14 @@ Logging in once per run and reusing `.auth/user.json` cuts auth setup time from 
 
 ## Test Coverage
 
-| Area | Tests | Auth Required |
-|------|-------|---------------|
-| Homepage | Hero, navigation, logo | No |
-| Games list | Cards, pagination | No |
-| Game search | MeiliSearch, empty state | No |
-| Top rankings | Categories, navigation | No |
-| News | Articles, category filters | No |
-| Profile | Collection, BGG import, logout | **Yes** |
+| Area         | Tests                          | Auth Required |
+| ------------ | ------------------------------ | ------------- |
+| Homepage     | Hero, navigation, logo         | No            |
+| Games list   | Cards, pagination              | No            |
+| Game search  | MeiliSearch, empty state       | No            |
+| Top rankings | Categories, navigation         | No            |
+| News         | Articles, category filters     | No            |
+| Profile      | Collection, BGG import, logout | **Yes**       |
 
 ## License
 
