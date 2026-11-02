@@ -18,7 +18,7 @@ test.describe('Топ класации', () => {
 
   test('показва 6 категории', async () => {
     const titles = await topPage.getCategoryTitles();
-    expect(titles.length).toBe(TOP_CATEGORIES.length);
+    expect(titles).toHaveLength(TOP_CATEGORIES.length);
   });
 
   test('всяка категория има "Виж класацията" линк', async () => {
