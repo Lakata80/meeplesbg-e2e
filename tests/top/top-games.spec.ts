@@ -22,8 +22,7 @@ test.describe('Топ класации', () => {
   });
 
   test('всяка категория има "Виж класацията" линк', async () => {
-    const count = await topPage.viewRankingLinks.count();
-    expect(count).toBe(TOP_CATEGORIES.length);
+    await expect(topPage.viewRankingLinks).toHaveCount(TOP_CATEGORIES.length);
   });
 
   test('клик на категория отива на класация страница', async ({ page }) => {
